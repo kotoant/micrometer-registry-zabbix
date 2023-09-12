@@ -35,9 +35,6 @@ jobs:
         if: ${{ github.event_name == 'push' && startsWith(github.ref_name, 'v') }}
         run: mvn -B clean versions:set -DnewVersion=${GITHUB_REF_NAME#"v"}
 
-      - name: Build with Maven
-        run: mvn -B clean install --file pom.xml -DskipTests -P release
-
       - name: Publish package with snapshot version
         if: ${{ github.event_name != 'push' }}
         run: mvn -B clean deploy
