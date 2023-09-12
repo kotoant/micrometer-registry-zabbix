@@ -37,14 +37,22 @@ jobs:
 
       - name: Publish package with snapshot version
         if: ${{ github.event_name != 'push' }}
-        run: mvn -B clean deploy
+        run: mvn --no-transfer-progress -B clean deploy
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
 
+      - name: Install gpg secret key
+        if: ${{ github.event_name == 'push' && startsWith(github.ref_name, 'v') }}
+        run: |
+          # Install gpg secret key
+          cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
+          # Verify gpg secret key
+          gpg --list-secret-keys --keyid-format LONG
+
       - name: Publish package with release version
         if: ${{ github.event_name == 'push' && startsWith(github.ref_name, 'v') }}
-        run: mvn -B clean deploy -P release
+        run: mvn --no-transfer-progress -B clean deploy -P release -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
