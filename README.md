@@ -11,4 +11,4 @@ Micrometer Registry for Zabbix
 [license-image]: https://img.shields.io/github/license/kotoant/micrometer-registry-zabbix.svg
 [license-link]: https://www.apache.org/licenses/LICENSE-2.0
 [maven-version-image]: https://img.shields.io/maven-central/v/io.github.kotoant.micrometer/micrometer-registry-zabbix.svg
-[maven-version-link]: https://search.maven.org/search?q=g:io.github.kotoant.micrometer%20AND%20a:micrometer-registry-zabbix&core=gav
+[maven-version-link]: https://central.sonatype.com/artifact/io.github.kotoant.micrometer/micrometer-registry-zabbix
